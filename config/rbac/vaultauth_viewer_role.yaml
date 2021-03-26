@@ -1,0 +1,20 @@
+# permissions for end users to view vaultauths.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: vaultauth-viewer-role
+rules:
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - vaultauths
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - vaultauths/status
+  verbs:
+  - get

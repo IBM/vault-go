@@ -1,0 +1,28 @@
+domain: vault-go.ibm.com
+repo: github.com/ibm/vault-go
+resources:
+- group: vault
+  kind: VaultNamespace
+  version: v1
+- group: vault
+  kind: VaultPolicy
+  version: v1
+- group: vault
+  kind: VaultRole
+  version: v1
+- group: vault
+  kind: VaultAuth
+  version: v1
+- group: vault
+  kind: SSHRole
+  version: v1
+- group: vault
+  kind: PKIRole
+  version: v1
+- group: vault
+  kind: JWTRole
+  version: v1
+- group: vault
+  kind: VaultEndpoint
+  version: v1
+version: "2"

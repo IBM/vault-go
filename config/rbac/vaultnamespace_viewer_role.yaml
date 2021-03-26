@@ -1,0 +1,20 @@
+# permissions for end users to view vaultnamespaces.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: vaultnamespace-viewer-role
+rules:
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - vaultnamespaces
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - vaultnamespaces/status
+  verbs:
+  - get

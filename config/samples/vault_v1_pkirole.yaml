@@ -1,0 +1,7 @@
+apiVersion: vault.vault-go.ibm.com/v1
+kind: PKIRole
+metadata:
+  name: pkirole-sample
+spec:
+  # Add fields here
+  foo: bar

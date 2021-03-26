@@ -1,0 +1,7 @@
+apiVersion: vault.vault-go.ibm.com/v1
+kind: VaultAuth
+metadata:
+  name: vaultauth-sample
+spec:
+  # Add fields here
+  foo: bar

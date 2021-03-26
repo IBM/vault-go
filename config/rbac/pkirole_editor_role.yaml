@@ -1,0 +1,24 @@
+# permissions for end users to edit pkiroles.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: pkirole-editor-role
+rules:
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - pkiroles
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - pkiroles/status
+  verbs:
+  - get

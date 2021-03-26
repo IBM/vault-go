@@ -1,0 +1,24 @@
+# permissions for end users to edit sshroles.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: sshrole-editor-role
+rules:
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - sshroles
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - sshroles/status
+  verbs:
+  - get

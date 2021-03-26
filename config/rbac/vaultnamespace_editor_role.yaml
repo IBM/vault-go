@@ -1,0 +1,24 @@
+# permissions for end users to edit vaultnamespaces.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: vaultnamespace-editor-role
+rules:
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - vaultnamespaces
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - vaultnamespaces/status
+  verbs:
+  - get
