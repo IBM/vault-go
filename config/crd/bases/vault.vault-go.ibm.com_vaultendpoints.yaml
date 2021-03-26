@@ -1,0 +1,515 @@
+
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.2.4
+  creationTimestamp: null
+  name: vaultendpoints.vault.vault-go.ibm.com
+spec:
+  group: vault.vault-go.ibm.com
+  names:
+    kind: VaultEndpoint
+    listKind: VaultEndpointList
+    plural: vaultendpoints
+    singular: vaultendpoint
+  scope: Namespaced
+  validation:
+    openAPIV3Schema:
+      description: VaultEndpoint is the Schema for the vaultendpoints API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: VaultEndpointSpec defines the desired state of VaultEndpoint
+          properties:
+            mountOptions:
+              description: AllowedRoles      []string              `json:"allowedRoles"
+                yaml:"allowedRoles"`
+              properties:
+                description:
+                  description: 'Description (string: "") – Specifies the human-friendly
+                    description of the mount.'
+                  type: string
+                externalEntropyAccess:
+                  description: 'ExternalEntropyAccess (bool: false) - Enable the secrets
+                    engine to access Vault''s external entropy source.'
+                  type: boolean
+                local:
+                  description: 'Config (map<string|string>: nil) – Specifies configuration
+                    options for this mount; if set on a specific mount, values will
+                    override any global defaults (e.g. the system TTL/Max TTL) Local
+                    (bool: false) – Specifies if the secrets engine is a local mount
+                    only. Local mounts are not replicated nor (if a secondary) removed
+                    by replication.'
+                  type: boolean
+                sealWrap:
+                  description: 'SealWrap (bool: false) - Enable seal wrapping for
+                    the mount, causing values stored by the mount to be wrapped by
+                    the seal''s encryption capability.'
+                  type: boolean
+                type:
+                  description: 'Type (string: <required>) – Specifies the type of
+                    the backend, such as "aws".'
+                  type: string
+              type: object
+            path:
+              type: string
+            pkiConfig:
+              description: PKIConfig is the pki mount configuration
+              properties:
+                crl:
+                  description: VaultEndpointConfigCRL Specifies the duration for which
+                    the generated CRL should be marked valid. If the CRL is disabled,
+                    it will return a signed but zero-length CRL for any request. If
+                    enabled, it will re-build the CRL. https://www.vaultproject.io/api/secret/pki#set-crl-configuration
+                  properties:
+                    disable:
+                      description: 'Disable (bool: false) – Disables or enables CRL
+                        building.'
+                      type: string
+                    expiry:
+                      description: 'Expiry (string: "72h") – Specifies the time until
+                        expiration.'
+                      type: string
+                  required:
+                  - disable
+                  - expiry
+                  type: object
+                exportPrivateKey:
+                  description: 'ExportPrivateKey (bool: false) – If true, the private
+                    key will be returned in the response; if false the private key
+                    will not be returned and cannot be retrieved later.'
+                  type: boolean
+                intermediateOptions:
+                  properties:
+                    generateOptions:
+                      description: VaultGenerateOptions parameters to use when isuing
+                        a cert https://www.vaultproject.io/api/secret/pki#generate-intermediate
+                      properties:
+                        addBasicConstraints:
+                          description: 'AddBasicConstraints (bool) Whether to add
+                            a Basic Constraints extension with CA: true. Only needed
+                            as a workaround in some compatibility scenarios with Active
+                            Directory Certificate Services.'
+                          type: boolean
+                        altNames:
+                          description: 'AltNames (string: "") – Specifies requested
+                            Subject Alternative Names, in a comma-delimited list.
+                            These can be host names or email addresses; they will
+                            be parsed into their respective fields. If any requested
+                            names do not match role policy, the entire request will
+                            be denied.'
+                          type: string
+                        commonName:
+                          description: "\tDN `json:\"dn,omitempty\" yaml:\"dn,omitempty\"
+                            vault:\"dn,omitempty\"` start Distinguished Name *** CommonName
+                            (string: <required>) – Specifies the requested CN for
+                            the certificate. If the CN is allowed by role policy,
+                            it will be issued."
+                          type: string
+                        country:
+                          description: 'Country (string: "") – Specifies the C (Country)
+                            values in the subject field of issued certificates. This
+                            is a comma-separated string or JSON array.'
+                          items:
+                            type: string
+                          type: array
+                        excludeCNFromSANs:
+                          description: 'ExcludeCNFromSANs (bool: false) – If true,
+                            the given common_name will not be included in DNS or Email
+                            Subject Alternate Names (as appropriate). Useful if the
+                            CN is not a hostname or email address, but is instead
+                            some human-readable identifier.'
+                          type: boolean
+                        format:
+                          description: 'Format (string: "pem") – Specifies the format
+                            for returned data. This can be pem, der, or pem_bundle;
+                            defaults  to pem. If der, the output is base64 encoded.
+                            If pem_bundle, the csr field will contain the private
+                            key (if exported) and CSR, concatenated.'
+                          type: string
+                        ipSans:
+                          description: 'IPSans (string: "") – Specifies requested
+                            IP Subject Alternative Names, in a comma-delimited list.
+                            Only valid if the role allows IP SANs (which is the default).'
+                          type: string
+                        keyBits:
+                          description: 'KeyBits (int: 2048) – Specifies the number
+                            of bits to use. This must be changed to a valid value
+                            if the key_type is ec, e.g., 224 or 521.'
+                          type: string
+                        keyType:
+                          description: 'KeyType (string: "rsa") – Specifies the desired
+                            key type; must be rsa or ec.'
+                          type: string
+                        locality:
+                          description: 'Locality (string: "") – Specifies the L (Locality)
+                            values in the subject field of issued certificates. This
+                            is a comma-separated string or JSON array.'
+                          items:
+                            type: string
+                          type: array
+                        maxTTL:
+                          description: 'MaxTTL max_ttl (int64: 0) – Specifies the
+                            Time To Live value provided as seconds in int. If not
+                            set, uses the system default value or the value of max_ttl,
+                            whichever is shorter.'
+                          format: int64
+                          type: integer
+                        organization:
+                          description: 'organization (string: "") – Specifies the
+                            O (Organization) values in the subject field of issued
+                            certificates. This is a comma-separated string or JSON
+                            array.'
+                          items:
+                            type: string
+                          type: array
+                        otherSans:
+                          description: 'OtherSans (string: "") – Specifies custom
+                            OID/UTF8-string SANs. These must match values specified
+                            on the role in allowed_other_sans (see role creation for
+                            allowed_other_sans globbing rules). The format is the
+                            same as OpenSSL: <oid>;<type>:<value> where the only current
+                            valid type is UTF8. This can be a comma-delimited list
+                            or a JSON string slice.'
+                          type: string
+                        ou:
+                          description: 'OU (string: "") – Specifies the OU (OrganizationalUnit)
+                            values in the subject field of issued certificates. This
+                            is a comma-separated string or JSON array.'
+                          items:
+                            type: string
+                          type: array
+                        permittedDNSDomains:
+                          description: PermittedDNSDomains (slice) Domains for which
+                            this certificate is allowed to sign or issue child certificates.
+                            If set, all DNS names (subject and alt) on child certs
+                            must be exact matches or subsets of the given domains
+                            (see https://tools.ietf.org/html/rfc5280#section-4.2.1.10).
+                          items:
+                            type: string
+                          type: array
+                        postalCode:
+                          description: 'postalCode (string: "") – Specifies the Postal
+                            Code values in the subject field of issued certificates.
+                            This is a comma-separated string or JSON array.'
+                          items:
+                            type: string
+                          type: array
+                        privateKeyFormat:
+                          description: 'PrivateKeyFormat (string: "der") – Specifies
+                            the format for marshaling the private key. Defaults to
+                            der which will return either base64-encoded DER or PEM-encoded
+                            DER, depending on the value of format. The other option
+                            is pkcs8 which will return the key marshalled as PEM-encoded
+                            PKCS8.'
+                          type: string
+                        province:
+                          description: 'Province (string: "") – Specifies the ST (Province)
+                            values in the subject field of issued certificates. This
+                            is a comma-separated string or JSON array.'
+                          items:
+                            type: string
+                          type: array
+                        serialNumber:
+                          description: 'SerialNumber (string: "") – Specifies the
+                            Serial Number, if any. Otherwise Vault will generate a
+                            random serial for you. If you want more than one, specify
+                            alternative names in the alt_names map using OID 2.5.4.5.'
+                          type: string
+                        streetAddress:
+                          description: 'StreetAddress (string: "") – Specifies the
+                            Street Address values in the subject field of issued certificates.
+                            This is a comma-separated string or JSON array.'
+                          items:
+                            type: string
+                          type: array
+                        ttl:
+                          description: 'TTL ttl (int64: 0) – Specifies the Time To
+                            Live value provided as seconds in int. If not set, uses
+                            the system default value or the value of max_ttl, whichever
+                            is shorter.'
+                          format: int64
+                          type: integer
+                        uriSans:
+                          description: 'URISans (string: "") – Specifies the requested
+                            URI Subject Alternative Names, in a comma-delimited list.'
+                          type: string
+                      type: object
+                    rootCANamespace:
+                      type: string
+                    rootCAPath:
+                      type: string
+                  type: object
+                rootOptions:
+                  properties:
+                    generateOptions:
+                      description: VaultGenerateOptions parameters to use when isuing
+                        a cert https://www.vaultproject.io/api/secret/pki#generate-intermediate
+                      properties:
+                        addBasicConstraints:
+                          description: 'AddBasicConstraints (bool) Whether to add
+                            a Basic Constraints extension with CA: true. Only needed
+                            as a workaround in some compatibility scenarios with Active
+                            Directory Certificate Services.'
+                          type: boolean
+                        altNames:
+                          description: 'AltNames (string: "") – Specifies requested
+                            Subject Alternative Names, in a comma-delimited list.
+                            These can be host names or email addresses; they will
+                            be parsed into their respective fields. If any requested
+                            names do not match role policy, the entire request will
+                            be denied.'
+                          type: string
+                        commonName:
+                          description: "\tDN `json:\"dn,omitempty\" yaml:\"dn,omitempty\"
+                            vault:\"dn,omitempty\"` start Distinguished Name *** CommonName
+                            (string: <required>) – Specifies the requested CN for
+                            the certificate. If the CN is allowed by role policy,
+                            it will be issued."
+                          type: string
+                        country:
+                          description: 'Country (string: "") – Specifies the C (Country)
+                            values in the subject field of issued certificates. This
+                            is a comma-separated string or JSON array.'
+                          items:
+                            type: string
+                          type: array
+                        excludeCNFromSANs:
+                          description: 'ExcludeCNFromSANs (bool: false) – If true,
+                            the given common_name will not be included in DNS or Email
+                            Subject Alternate Names (as appropriate). Useful if the
+                            CN is not a hostname or email address, but is instead
+                            some human-readable identifier.'
+                          type: boolean
+                        format:
+                          description: 'Format (string: "pem") – Specifies the format
+                            for returned data. This can be pem, der, or pem_bundle;
+                            defaults  to pem. If der, the output is base64 encoded.
+                            If pem_bundle, the csr field will contain the private
+                            key (if exported) and CSR, concatenated.'
+                          type: string
+                        ipSans:
+                          description: 'IPSans (string: "") – Specifies requested
+                            IP Subject Alternative Names, in a comma-delimited list.
+                            Only valid if the role allows IP SANs (which is the default).'
+                          type: string
+                        keyBits:
+                          description: 'KeyBits (int: 2048) – Specifies the number
+                            of bits to use. This must be changed to a valid value
+                            if the key_type is ec, e.g., 224 or 521.'
+                          type: string
+                        keyType:
+                          description: 'KeyType (string: "rsa") – Specifies the desired
+                            key type; must be rsa or ec.'
+                          type: string
+                        locality:
+                          description: 'Locality (string: "") – Specifies the L (Locality)
+                            values in the subject field of issued certificates. This
+                            is a comma-separated string or JSON array.'
+                          items:
+                            type: string
+                          type: array
+                        maxTTL:
+                          description: 'MaxTTL max_ttl (int64: 0) – Specifies the
+                            Time To Live value provided as seconds in int. If not
+                            set, uses the system default value or the value of max_ttl,
+                            whichever is shorter.'
+                          format: int64
+                          type: integer
+                        organization:
+                          description: 'organization (string: "") – Specifies the
+                            O (Organization) values in the subject field of issued
+                            certificates. This is a comma-separated string or JSON
+                            array.'
+                          items:
+                            type: string
+                          type: array
+                        otherSans:
+                          description: 'OtherSans (string: "") – Specifies custom
+                            OID/UTF8-string SANs. These must match values specified
+                            on the role in allowed_other_sans (see role creation for
+                            allowed_other_sans globbing rules). The format is the
+                            same as OpenSSL: <oid>;<type>:<value> where the only current
+                            valid type is UTF8. This can be a comma-delimited list
+                            or a JSON string slice.'
+                          type: string
+                        ou:
+                          description: 'OU (string: "") – Specifies the OU (OrganizationalUnit)
+                            values in the subject field of issued certificates. This
+                            is a comma-separated string or JSON array.'
+                          items:
+                            type: string
+                          type: array
+                        permittedDNSDomains:
+                          description: PermittedDNSDomains (slice) Domains for which
+                            this certificate is allowed to sign or issue child certificates.
+                            If set, all DNS names (subject and alt) on child certs
+                            must be exact matches or subsets of the given domains
+                            (see https://tools.ietf.org/html/rfc5280#section-4.2.1.10).
+                          items:
+                            type: string
+                          type: array
+                        postalCode:
+                          description: 'postalCode (string: "") – Specifies the Postal
+                            Code values in the subject field of issued certificates.
+                            This is a comma-separated string or JSON array.'
+                          items:
+                            type: string
+                          type: array
+                        privateKeyFormat:
+                          description: 'PrivateKeyFormat (string: "der") – Specifies
+                            the format for marshaling the private key. Defaults to
+                            der which will return either base64-encoded DER or PEM-encoded
+                            DER, depending on the value of format. The other option
+                            is pkcs8 which will return the key marshalled as PEM-encoded
+                            PKCS8.'
+                          type: string
+                        province:
+                          description: 'Province (string: "") – Specifies the ST (Province)
+                            values in the subject field of issued certificates. This
+                            is a comma-separated string or JSON array.'
+                          items:
+                            type: string
+                          type: array
+                        serialNumber:
+                          description: 'SerialNumber (string: "") – Specifies the
+                            Serial Number, if any. Otherwise Vault will generate a
+                            random serial for you. If you want more than one, specify
+                            alternative names in the alt_names map using OID 2.5.4.5.'
+                          type: string
+                        streetAddress:
+                          description: 'StreetAddress (string: "") – Specifies the
+                            Street Address values in the subject field of issued certificates.
+                            This is a comma-separated string or JSON array.'
+                          items:
+                            type: string
+                          type: array
+                        ttl:
+                          description: 'TTL ttl (int64: 0) – Specifies the Time To
+                            Live value provided as seconds in int. If not set, uses
+                            the system default value or the value of max_ttl, whichever
+                            is shorter.'
+                          format: int64
+                          type: integer
+                        uriSans:
+                          description: 'URISans (string: "") – Specifies the requested
+                            URI Subject Alternative Names, in a comma-delimited list.'
+                          type: string
+                      type: object
+                  type: object
+                urls:
+                  description: VaultEndpointConfigURLs allows setting the issuing
+                    certificate endpoints, CRL distribution points, and OCSP server
+                    endpoints that will be encoded into issued certificates. https://www.vaultproject.io/api/secret/pki#set-urls
+                  properties:
+                    crlDistributionPoints:
+                      description: 'CRLDistributionPoints (array<string>: nil) – Specifies
+                        the URL values for the CRL Distribution Points field. This
+                        can be an array or a comma-separated string list.'
+                      items:
+                        type: string
+                      type: array
+                    issuingCertificates:
+                      description: 'IssuingCertificates (array<string>: nil) – Specifies
+                        the URL values for the Issuing Certificate field. This can
+                        be an array or a comma-separated string list. https://www.vaultproject.io/api/secret/pki#set-urls'
+                      items:
+                        type: string
+                      type: array
+                    ocspServers:
+                      description: 'OSCPServers (array<string>: nil) – Specifies the
+                        URL values for the OCSP Servers field. This can be an array
+                        or a comma-separated string list.'
+                      items:
+                        type: string
+                      type: array
+                  required:
+                  - crlDistributionPoints
+                  - issuingCertificates
+                  - ocspServers
+                  type: object
+              type: object
+            tuneOptions:
+              description: 'VaultMountTuneOptions Tune the default lease for the PKI
+                secrets engine: https://www.vaultproject.io/api-docs/system/mounts#tune-mount-configuration'
+              properties:
+                AllowedResponseHeaders:
+                  description: AllowedResponseHeaders (slice) A list of headers to
+                    whitelist and allow a plugin to set on responses.
+                  items:
+                    type: string
+                  type: array
+                auditNonHMACRequestKeys:
+                  description: 'AuditNonHMACRequestKeyss (string: "") - Comma-separated
+                    string or list of keys that will not be HMAC''d by audit devices
+                    in the request data object.'
+                  type: string
+                auditNonHMACResponseKeys:
+                  description: 'AuditNonHMACResponseKeys (string: "") - Comma-separated
+                    string or list of keys that will not be HMAC''d by audit devices
+                    in the response data object.'
+                  type: string
+                defaultLeaseTTL:
+                  description: 'DefaultLeaseTTL (duration: "") - The default lease
+                    TTL for this secrets engine. If unspecified, this defaults to
+                    the Vault server''s globally configured default lease TTL, or
+                    a previously configured value for the secrets engine.'
+                  format: int64
+                  type: integer
+                description:
+                  description: Description (string) User-friendly description for
+                    this credential backend.
+                  type: string
+                forceNoCache:
+                  description: ForceNoCache
+                  type: boolean
+                listingVisibility:
+                  description: ListingVisibility (string) Determines the visibility
+                    of the mount in the UI-specific listing endpoint. Accepted value
+                    are 'unauth' and ''.
+                  type: string
+                maxLeaseTTL:
+                  description: 'MaxLeaseTTL (duration: "") - The maximum lease TTL
+                    for this secrets engine. If unspecified, this defaults to the
+                    Vault server''s globally configured maximum lease TTL, or a previously
+                    configured value for the secrets engine.'
+                  format: int64
+                  type: integer
+              required:
+              - AllowedResponseHeaders
+              - auditNonHMACRequestKeys
+              - auditNonHMACResponseKeys
+              type: object
+            vaultNamespace:
+              type: string
+          required:
+          - path
+          type: object
+        status:
+          description: VaultEndpointStatus defines the observed state of VaultEndpoint
+          type: object
+      type: object
+  version: v1
+  versions:
+  - name: v1
+    served: true
+    storage: true
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

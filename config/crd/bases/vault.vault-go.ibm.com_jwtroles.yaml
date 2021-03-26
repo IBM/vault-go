@@ -1,0 +1,219 @@
+
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.2.4
+  creationTimestamp: null
+  name: jwtroles.vault.vault-go.ibm.com
+spec:
+  group: vault.vault-go.ibm.com
+  names:
+    kind: JWTRole
+    listKind: JWTRoleList
+    plural: jwtroles
+    singular: jwtrole
+  scope: Namespaced
+  validation:
+    openAPIV3Schema:
+      description: JWTRole is the Schema for the jwtroles API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: JWTRoleSpec defines the desired state of JWTRole
+          properties:
+            authPath:
+              type: string
+            parameters:
+              description: JWTRoleParameters parameters to feen to jwt role endpoint
+              properties:
+                allowedRedirectURLs:
+                  description: 'AllowedRedirectURLs allowed_redirect_uris (list: <required>)
+                    - The list of allowed values for redirect_uri during OIDC logins.'
+                  items:
+                    type: string
+                  type: array
+                boundAudiences:
+                  description: 'BoundAudiences bound_audiences (array: <optional>)
+                    - List of aud claims to match against. Any match is sufficient.
+                    Required for "jwt" roles, optional for "oidc" roles.'
+                  items:
+                    type: string
+                  type: array
+                boundClaims:
+                  additionalProperties:
+                    type: string
+                  description: 'BoundClaims bound_claims (map: <optional>) - If set,
+                    a map of claims (keys) to match against respective claim values
+                    (values). The expected value may be a single string or a list
+                    of strings. The interpretation of the bound claim values is configured
+                    with bound_claims_type. Keys support JSON pointer syntax for referencing
+                    claims.'
+                  type: object
+                boundClaimsType:
+                  description: 'BoundClaimsType bound_claims_type (string: "string")
+                    - Configures the interpretation of the bound_claims values. If
+                    "string" (the default), the values will treated as string literals
+                    and must match exactly. If set to "glob", the values will be interpreted
+                    as globs, with * matching any number of characters.'
+                  type: string
+                boundSubject:
+                  description: 'BoundSubject bound_subject (string: <optional>) -
+                    If set, requires that the sub claim matches this value.'
+                  type: string
+                claimMappings:
+                  additionalProperties:
+                    type: string
+                  description: 'ClaimMappings claim_mappings (map: <optional>) - If
+                    set, a map of claims (keys) to be copied to specified metadata
+                    fields (values). Keys support JSON pointer syntax for referencing
+                    claims.'
+                  type: object
+                clockSkewLeeway:
+                  description: 'ClockSkewLeeway clock_skew_leeway (int: <optional>)
+                    - The amount of leeway to add to all claims to account for clock
+                    skew, in seconds. Defaults to 60 seconds if set to 0 and can be
+                    disabled if set to -1. Only applicable with "jwt" roles.'
+                  format: int64
+                  type: integer
+                expirationLeeway:
+                  description: 'ExpirationLeeway expiration_leeway (int: <optional>)
+                    - The amount of leeway to add to expiration (exp) claims to account
+                    for clock skew, in seconds. Defaults to 150 seconds if set to
+                    0 and can be disabled if set to -1. Only applicable with "jwt"
+                    roles.'
+                  format: int64
+                  type: integer
+                groupClaim:
+                  description: 'GroupClaim groups_claim (string: <optional>) - The
+                    claim to use to uniquely identify the set of groups to which the
+                    user belongs; this will be used as the names for the Identity
+                    group aliases created due to a successful login. The claim value
+                    must be a list of strings. Supports JSON pointer syntax for referencing
+                    claims.'
+                  type: string
+                notBeforeLeeway:
+                  description: 'NotBeforeLeeway not_before_leeway (int: <optional>)
+                    - The amount of leeway to add to not before (nbf) claims to account
+                    for clock skew, in seconds. Defaults to 150 seconds if set to
+                    0 and can be disabled if set to -1. Only applicable with "jwt"
+                    roles.'
+                  format: int64
+                  type: integer
+                oidcScopes:
+                  description: 'OIDCScopes oidc_scopes (list: <optional>) - If set,
+                    a list of OIDC scopes to be used with an OIDC role. The standard
+                    scope "openid" is automatically included and need not be specified.'
+                  items:
+                    type: string
+                  type: array
+                roleType:
+                  description: "RoleType\trole_type (string: <optional>) - Type of
+                    role, either \"oidc\" (default) or \"jwt\"."
+                  type: string
+                tokenBoundCIDRs:
+                  description: 'TokenBoundCIDRs token_bound_cidrs (array: [] or comma-delimited
+                    string: "") - List of CIDR blocks; if set, specifies blocks of
+                    IP addresses which can authenticate successfully, and ties the
+                    resulting token to these blocks as well.'
+                  type: string
+                tokenExplicitMaxTTL:
+                  description: 'TokenExplicitMaxTTL token_explicit_max_ttl (integer:
+                    0 or string: "") - If set, will encode an explicit max TTL onto
+                    the token. This is a hard cap even if token_ttl and token_max_ttl
+                    would otherwise allow a renewal.'
+                  format: int64
+                  type: integer
+                tokenMaxTTL:
+                  description: 'TokenMaxTTL token_max_ttl (integer: 0 or string: "")
+                    - The maximum lifetime for generated tokens. This current value
+                    of this will be referenced at renewal time.'
+                  format: int64
+                  type: integer
+                tokenNoDefaultPolicy:
+                  description: 'TokenNoDefaultPolicy token_no_default_policy (bool:
+                    false) - If set, the default policy will not be set on generated
+                    tokens; otherwise it will be added to the policies set in token_policies.'
+                  type: boolean
+                tokenNumUses:
+                  description: 'TokenNumUses token_num_uses (integer: 0) - The maximum
+                    number of times a generated token may be used (within its lifetime);
+                    0 means unlimited. If you require the token to have the ability
+                    to create child tokens, you will need to set this value to 0.'
+                  type: integer
+                tokenPeriod:
+                  description: 'TokenPeriod token_period (integer: 0 or string: "")
+                    - The period, if any, to set on the token.'
+                  format: int64
+                  type: integer
+                tokenPolicies:
+                  description: 'TokenPolicies token_policies (array: [] or comma-delimited
+                    string: "") - List of policies to encode onto generated tokens.
+                    Depending on the auth method, this list may be supplemented by
+                    user/group/other values.'
+                  items:
+                    type: string
+                  type: array
+                tokenTTL:
+                  description: 'TokenTTL  token_ttl (integer: 0  or string: "") -
+                    The incre mental lifetime for generat ed tokens. This current
+                    value of this will be referenced at renewal time.'
+                  type: string
+                tokenType:
+                  description: 'TokenType token_type (string: "") - The type of token
+                    that should be generated. Can be service, batch, or default to
+                    use the mount''s tuned default (which unless changed will be service
+                    tokens). For token store roles, there are two additional possibilities:
+                    default-service and default-batch which specify the type to return
+                    unless the client requests a different type at generation time.'
+                  type: string
+                userClaim:
+                  description: 'UserClaim user_claim (string: <required>) - The claim
+                    to use to uniquely identify the user; this will be used as the
+                    name for the Identity entity alias created due to a successful
+                    login. The claim value must be a string.'
+                  type: string
+                verboseOIDCLogging:
+                  description: 'tokenTTL tokenTTLng (bool: false) - Log received OIDC
+                    tokens and claims when debug-level logging is active. Not recommended
+                    in production since sensitive information may be present in OIDC
+                    responses.'
+                  type: boolean
+              type: object
+            roleName:
+              type: string
+            vaultNamespace:
+              type: string
+          required:
+          - authPath
+          - parameters
+          - roleName
+          - vaultNamespace
+          type: object
+        status:
+          description: JWTRoleStatus defines the observed state of JWTRole
+          type: object
+      type: object
+  version: v1
+  versions:
+  - name: v1
+    served: true
+    storage: true
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

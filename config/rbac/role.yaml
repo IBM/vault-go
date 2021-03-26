@@ -9,6 +9,106 @@ rules:
 - apiGroups:
   - vault.vault-go.ibm.com
   resources:
+  - jwtroles
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - jwtroles/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - pkiroles
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - pkiroles/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - sshroles
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - sshroles/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - vaultauths
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - vaultauths/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - vaultendpoints
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - vaultendpoints/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
   - vaultnamespaces
   verbs:
   - create
@@ -22,6 +122,46 @@ rules:
   - vault.vault-go.ibm.com
   resources:
   - vaultnamespaces/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - vaultpolicies
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - vaultpolicies/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - vaultroles
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - vaultroles/status
   verbs:
   - get
   - patch

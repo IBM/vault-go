@@ -1,0 +1,140 @@
+
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.2.4
+  creationTimestamp: null
+  name: vaultroles.vault.vault-go.ibm.com
+spec:
+  group: vault.vault-go.ibm.com
+  names:
+    kind: VaultRole
+    listKind: VaultRoleList
+    plural: vaultroles
+    singular: vaultrole
+  scope: Namespaced
+  validation:
+    openAPIV3Schema:
+      description: VaultRole is the Schema for the vaultroles API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: VaultRoleSpec defines the desired state of VaultRole
+          properties:
+            authMethod:
+              description: Foo is an example field of VaultRole. Edit VaultRole_types.go
+                to remove/update
+              type: string
+            data:
+              description: VaultRoleData will be used as data in the vault api POST
+                request
+              properties:
+                audience:
+                  description: 'k8s only audience (string: "") - Optional Audience
+                    claim to verify in the JWT.'
+                  type: string
+                bindSecretID:
+                  description: 'bindSecretID: true'
+                  type: boolean
+                boundServiceAccountNames:
+                  description: 'k8s only bound_service_account_names (array: <required>)
+                    - List of service account names able to access this role. If set
+                    to "*" all names are allowed, both this and bound_service_account_namespaces
+                    can not be "*".'
+                  items:
+                    type: string
+                  type: array
+                boundServiceAccountNamespaces:
+                  description: 'k8s only bound_service_account_namespaces (array:
+                    <required>) - List of namespaces allowed to access this role.
+                    If set to "*" all namespaces are allowed, both this and bound_service_account_names
+                    can not be set to "*".'
+                  items:
+                    type: string
+                  type: array
+                localSecretIDs:
+                  description: 'localSecretIDs: false'
+                  type: boolean
+                policies:
+                  description: 'policies: - ddt-deploy - kube-deploy - auth-k8s-config'
+                  items:
+                    type: string
+                  type: array
+                secretIDBoundCIDRs:
+                  description: 'secretIDBoundCIDRs: null'
+                  items:
+                    type: string
+                  type: array
+                secretIDNumUses:
+                  description: 'secretIDNumUses: 0'
+                  type: integer
+                secretIDTTL:
+                  description: 'secretIDTTL: 0'
+                  type: integer
+                tokenBoundCIDRs:
+                  description: 'tokenBoundCIDRs: []'
+                  items:
+                    type: string
+                  type: array
+                tokenExplicitMaxTTL:
+                  description: 'tokenExplicitMaxTTL: 0'
+                  type: integer
+                tokenMaxTTL:
+                  description: 'tokenMaxTTL: 1800'
+                  format: int64
+                  type: integer
+                tokenNoDefaultPolicy:
+                  description: 'tokenNoDefaultPolicy: false'
+                  type: boolean
+                tokenNumUses:
+                  description: 'tokenNumUses: 0'
+                  type: integer
+                tokenPeriod:
+                  description: 'tokenPeriod: 0'
+                  type: integer
+                tokenPolicies:
+                  description: 'tokenPolicies: - ddt-deploy - kube-deploy - auth-k8s-config'
+                  items:
+                    type: string
+                  type: array
+                tokenTTL:
+                  description: 'tokenTTL: 1800'
+                  format: int64
+                  type: integer
+                tokenType:
+                  description: 'tokenType: default'
+                  type: string
+              type: object
+            roleName:
+              type: string
+            vaultNamespace:
+              type: string
+          type: object
+        status:
+          description: VaultRoleStatus defines the observed state of VaultRole
+          type: object
+      type: object
+  version: v1
+  versions:
+  - name: v1
+    served: true
+    storage: true
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
