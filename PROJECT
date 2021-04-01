@@ -25,4 +25,7 @@ resources:
 - group: vault
   kind: VaultEndpoint
   version: v1
+- group: vault
+  kind: SecretMeta
+  version: v1
 version: "2"

@@ -114,6 +114,14 @@ func main() {
 		setupLog.Error(err, "unable to create controller", "controller", "VaultEndpoint")
 		os.Exit(1)
 	}
+	if err = (&controllers.SecretMetaReconciler{
+		Client: mgr.GetClient(),
+		Log:    ctrl.Log.WithName("controllers").WithName("SecretMeta"),
+		Scheme: mgr.GetScheme(),
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "SecretMeta")
+		os.Exit(1)
+	}
 	// +kubebuilder:scaffold:builder
 
 	setupLog.Info("starting manager")
