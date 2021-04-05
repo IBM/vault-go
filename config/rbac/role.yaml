@@ -49,6 +49,26 @@ rules:
 - apiGroups:
   - vault.vault-go.ibm.com
   resources:
+  - secretmeta
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
+  - secretmeta/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - vault.vault-go.ibm.com
+  resources:
   - sshroles
   verbs:
   - create
